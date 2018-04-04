@@ -39,6 +39,8 @@ import copy
 import socket
 import time
 
+from urlparse import urlparse
+
 from cowrie.core.config import CONFIG
 
 
@@ -202,6 +204,36 @@ class Output(object):
             self.ips[sessionno] = ev['src_ip']
         else:
             ev['session'] = self.sessions[sessionno]
+
+        for key, newkey in [
+                ('url', 'uri'), 
+                ('src_ip', 'sip'), 
+                ('dst_ip', 'dip'), 
+                ('src_port', 'sport'), 
+                ('dst_port', 'dport'), 
+                ('shasum', 'md5'),
+                ('timestamp', '@timestamp'),
+                ]:
+            v = ev.get(key)
+            if v is None:
+                continue
+            else:
+                ev[newkey] = v
+                ev.pop(key)
+            if key == 'url':
+                ev['ltype'] = 'download'
+                o = urlparse(v)
+                if o.port:
+                    ev['cport'] = o.port
+                if o.hostname:
+                    ev['chost'] = o.hostname
+                if o.path:
+                    ev['path'] = o.path
+                if o.scheme:
+                    ev['cproto'] = o.scheme
+
+        ev['app'] = 'cowrie'
+        ev['type'] = 'honeypot'
 
         self.write(ev)
 

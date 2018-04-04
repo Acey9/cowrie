@@ -78,7 +78,8 @@ class Artifact:
         self.fp.seek(0)
         data = self.fp.read()
         self.fp.close()
-        self.shasum = hashlib.sha256(data).hexdigest()
+        #self.shasum = hashlib.sha256(data).hexdigest()
+        self.shasum = hashlib.md5(data).hexdigest()
         self.shasumFilename = os.path.join(self.artifactDir, self.shasum)
 
         if size == 0 and not keepEmpty:
