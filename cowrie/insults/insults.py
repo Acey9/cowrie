@@ -158,7 +158,8 @@ class LoggingServerProtocol(insults.ServerProtocol):
         if self.stdinlogOpen:
             try:
                 with open(self.stdinlogFile, 'rb') as f:
-                    shasum = hashlib.sha256(f.read()).hexdigest()
+                    #shasum = hashlib.sha256(f.read()).hexdigest()
+                    shasum = hashlib.md5(f.read()).hexdigest()
                     shasumfile = os.path.join(self.downloadPath, shasum)
                     if os.path.exists(shasumfile):
                         os.remove(self.stdinlogFile)
@@ -195,7 +196,8 @@ class LoggingServerProtocol(insults.ServerProtocol):
                         continue
 
                     with open(rf, 'rb') as f:
-                        shasum = hashlib.sha256(f.read()).hexdigest()
+                        #shasum = hashlib.sha256(f.read()).hexdigest()
+                        shasum = hashlib.md5(f.read()).hexdigest()
                         shasumfile = os.path.join(self.downloadPath, shasum)
                         if os.path.exists(shasumfile):
                             os.remove(rf)

@@ -314,7 +314,8 @@ Options: (H) means HTTP/HTTPS only, (F) means FTP only
             self.exit()
 
         with open(self.safeoutfile, 'rb') as f:
-            shasum = hashlib.sha256(f.read()).hexdigest()
+            #shasum = hashlib.sha256(f.read()).hexdigest()
+            shasum = hashlib.md5(f.read()).hexdigest()
             hashPath = os.path.join(self.download_path, shasum)
 
         # If we have content already, delete temp file

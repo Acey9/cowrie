@@ -401,7 +401,8 @@ class HoneyPotFilesystem(object):
         if not fd:
             return True
         if self.tempfiles[fd] is not None:
-            shasum = hashlib.sha256(open(self.tempfiles[fd], 'rb').read()).hexdigest()
+            #shasum = hashlib.sha256(open(self.tempfiles[fd], 'rb').read()).hexdigest()
+            shasum = hashlib.md5(open(self.tempfiles[fd], 'rb').read()).hexdigest()
             shasumfile = CONFIG.get('honeypot', 'download_path') + "/" + shasum
             if (os.path.exists(shasumfile)):
                 os.remove(self.tempfiles[fd])
