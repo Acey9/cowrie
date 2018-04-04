@@ -67,6 +67,7 @@ class UserDB(object):
         it also knows wildcard '*' for any username or password
         prepend password with ! to explicitly deny it. Denials must come before wildcards
         """
+        return True
         for (login, passwd) in self.userdb:
             # Explicitly fail on !password
             if login == thelogin and passwd == b'!' + thepasswd:
