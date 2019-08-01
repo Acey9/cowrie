@@ -92,7 +92,8 @@ class command_tftp(HoneyPotCommand):
                 return
 
             with open(self.safeoutfile, 'rb') as f:
-                shasum = hashlib.sha256(f.read()).hexdigest()
+                #shasum = hashlib.sha256(f.read()).hexdigest()
+                shasum = hashlib.md5(f.read()).hexdigest()
                 hash_path = os.path.join(self.download_path, shasum)
 
             # If we have content already, delete temp file
