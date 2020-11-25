@@ -76,7 +76,7 @@ class HoneyPotTelnetAuthProtocol(AuthenticatingTelnetProtocol):
     protocol is replaced with HoneyPotTelnetSession.
     """
 
-    loginPrompt = b'login: '
+    loginPrompt = b'xDSL Router Login: '
     passwordPrompt = b'Password: '
     windowSize = [40, 80]
 
