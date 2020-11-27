@@ -24,6 +24,34 @@ from cowrie.core.credentials import UsernamePasswordIP
 
 from cowrie.core.config import CONFIG
 
+prompt = [
+            "(none) login",
+            "125G",
+            "BCM96848",
+            "D301",
+            "D401",
+            "DAM-2160i",
+            "GM login",
+            "LS-O9710n iss3 login",
+            "USR-G806 login",
+            "WR9000 login",
+            "dvrdvs login",
+            "goke login",
+            "localhost login",
+            "none login",
+            "phicomm",
+            "quopin  login",
+            "sbs-ipcam login",
+            "tango3 login",
+            "tangox login",
+            "unknown login",
+            "xDSL Router Login",
+            "zxic",
+            "Login",
+            ]
+
+prompt_len = len(prompt)
+
 class HoneyPotTelnetFactory(protocol.ServerFactory):
     """
     This factory creates HoneyPotTelnetAuthProtocol instances
@@ -76,9 +104,15 @@ class HoneyPotTelnetAuthProtocol(AuthenticatingTelnetProtocol):
     protocol is replaced with HoneyPotTelnetSession.
     """
 
-    loginPrompt = b'xDSL Router Login: '
+    _loginPrompt = b'xDSL Router Login: '
     passwordPrompt = b'Password: '
     windowSize = [40, 80]
+
+    @property
+    def loginPrompt():
+        idx = random.randint(0, prompt_len)
+        return '%s: ' % prompt[idx]
+
 
     def connectionMade(self):
         """
