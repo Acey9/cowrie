@@ -24,33 +24,32 @@ from cowrie.core.credentials import UsernamePasswordIP
 
 from cowrie.core.config import CONFIG
 
-prompt = [
-            "(none) login",
-            "125G",
-            "BCM96848",
-            "D301",
-            "D401",
-            "DAM-2160i",
-            "GM login",
-            "LS-O9710n iss3 login",
-            "USR-G806 login",
-            "WR9000 login",
-            "dvrdvs login",
-            "goke login",
-            "localhost login",
-            "none login",
-            "phicomm",
-            "quopin  login",
-            "sbs-ipcam login",
-            "tango3 login",
-            "tangox login",
-            "unknown login",
-            "xDSL Router Login",
-            "zxic",
-            "Login",
-            ]
+PROMPT = [
+    b'(none) login',
+    b'125G',
+    b'BCM96848',
+    b'D301',
+    b'D401',
+    b'DAM-2160i',
+    b'GM login',
+    b'LS-O9710n iss3 login',
+    b'USR-G806 login',
+    b'WR9000 login',
+    b'dvrdvs login',
+    b'goke login',
+    b'localhost login',
+    b'none login',
+    b'phicomm',
+    b'quopin  login',
+    b'sbs-ipcam login',
+    b'tango3 login',
+    b'tangox login',
+    b'unknown login',
+    b'xDSL Router Login',
+    b'zxic',
+    ]
 
-prompt_len = len(prompt)
+prompt_len = len(PROMPT)
 
 class HoneyPotTelnetFactory(protocol.ServerFactory):
     """
@@ -109,9 +108,9 @@ class HoneyPotTelnetAuthProtocol(AuthenticatingTelnetProtocol):
     windowSize = [40, 80]
 
     @property
-    def loginPrompt():
-        idx = random.randint(0, prompt_len)
-        return '%s: ' % prompt[idx]
+    def loginPrompt(self):
+        idx = random.randint(0, prompt_len-1)
+        return b'%s: ' % PROMPT[idx]
 
 
     def connectionMade(self):
